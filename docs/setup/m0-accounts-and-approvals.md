@@ -6,7 +6,8 @@ prices converted at about 1.40); they'll be confirmed against each provider's
 price calculator before anything is turned on, and every paid service gets a
 budget alert and a spending cap where the provider supports one.
 
-**Estimated total running cost during M0: about $150–300 CAD a month.**
+**Estimated total running cost during M0: about $150–300 CAD a month**
+(the project email is now $0 — owner's own domain).
 For comparison, the plan budgets $1,000–3,000 a month during the full
 historical backfill (mostly transcription and AI tagging in M3–M4).
 
@@ -30,7 +31,8 @@ historical backfill (mostly transcription and AI tagging in M3–M4).
     especially if you already own a domain.
   - (b) A forwarding alias on a domain you already have: **$0**.
   - (c) A free webmail address: $0, but it looks less credible to the City.
-- **Your decision:** which option, and the address.
+- **Decided 2026-11-14:** the owner will use an address on their own domain
+  (option b, $0). Still to choose: the exact address.
 
 ### 3. Cloud hosting account (database, file storage, scheduler)
 This hosts the database, keeps an unchanged copy of every file collected, and
