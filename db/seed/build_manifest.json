@@ -1,0 +1,90 @@
+{
+  "pipeline_version": "seed-people-wards-0.1",
+  "curated_file": "db/seed/curated/council_changes_2018_2030.yaml",
+  "inputs": {
+    "attendance_2018": {
+      "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/datastore/dump/b1989a8e-d69c-4b7e-85a7-c1edc2f887e9",
+      "sha256": "b7bf69a78d3fe5a3eb1cfe66d1a89e5b232f1182793060fa6ec20675b5f7a717",
+      "fetched_at": "2026-11-14T04:33:15+00:00",
+      "source": "tor_attendance"
+    },
+    "attendance_2022": {
+      "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/datastore/dump/4f8317bd-566b-4e15-b3b7-59a4a398a856",
+      "sha256": "a71001eb0ed4b46709df76a3db70333b051c298e288a689fcb15b19ea7bfed85",
+      "fetched_at": "2026-11-14T04:33:16+00:00",
+      "source": "tor_attendance"
+    },
+    "by_2021 Councillor Ward 22": {
+      "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/97d72233-8681-4b3d-828e-4929d40d122c/resource/287f8b0d-dde8-4ebd-887c-bd9f628a2e3c/download/2021-councillor-ward-22-scarborough-agincourt-1.xlsx",
+      "sha256": "7b2c1f98d22c44f8190338f048ad513d0fc0f2d256362bc963314c18e5183bf4",
+      "fetched_at": "2026-11-14T04:29:13+00:00",
+      "source": "tor_elections"
+    },
+    "by_2023 Councillor Ward 20": {
+      "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/97d72233-8681-4b3d-828e-4929d40d122c/resource/5ced6a0b-1f7a-4717-b522-da02a4d916ab/download/2023-office-of-the-councillor-ward-20-poll-by-poll.xlsx",
+      "sha256": "489a78b37eae4b3b90b8a7907bf4ee852c29449f2703d874e17572ca8c9df9f1",
+      "fetched_at": "2026-11-14T04:29:10+00:00",
+      "source": "tor_elections"
+    },
+    "by_2023 Office of the Mayor": {
+      "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/97d72233-8681-4b3d-828e-4929d40d122c/resource/868f890d-5432-432b-823c-c6a6fafa2f63/download/2023_office_of_the_mayor.xlsx",
+      "sha256": "8077b5b94ebd25fb97d34cdeaeeadfb8a8c058d4530c06ab1ad56665a3fe435a",
+      "fetched_at": "2026-11-14T04:29:11+00:00",
+      "source": "tor_elections"
+    },
+    "by_2024 Councillor Ward 15": {
+      "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/97d72233-8681-4b3d-828e-4929d40d122c/resource/7e64ea38-c3a4-4b1f-a68e-4127dfca6430/download/2024-councillor-ward-15-poll-by-poll.xlsx",
+      "sha256": "f7e2c9023a041982a5645732b92fb70dad92962fc5f9cf6d567c4f5641b5d872",
+      "fetched_at": "2026-11-14T04:29:08+00:00",
+      "source": "tor_elections"
+    },
+    "by_2025 Councillor Ward 25": {
+      "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/97d72233-8681-4b3d-828e-4929d40d122c/resource/1a29cfb8-0ee8-4e7d-b415-f07963d5a436/download/2025-councillor-ward25-poll-by-poll.xlsx",
+      "sha256": "ce9b2d1466aa87b603d4a1cc4c77e23a111af21bab09d198e9b8a06fa5645fed",
+      "fetched_at": "2026-11-14T04:29:07+00:00",
+      "source": "tor_elections"
+    },
+    "declaration_2026": {
+      "url": "https://www.toronto.ca/wp-content/uploads/2026/10/8966-Declaration-of-Results-2026-Toronto-Municipal-Election-Oct-29-Final.pdf",
+      "sha256": "e6be04483216f7ed32c6fcfb5327ecc23641cf49531cb53d6629842fb4b95aee",
+      "fetched_at": "2026-11-14T04:34:30+00:00",
+      "source": "tor_elections"
+    },
+    "results_2018": {
+      "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/96d35404-44d9-49d8-95bb-fb1e5489240d/resource/2fcd5f20-90f5-4dd0-88eb-22e978b9bf89/download/2018-results.zip",
+      "sha256": "786aa376d5b4d5d3042d3e0b8af148f3cf4edce0c9345677e412ccc744f940e0",
+      "fetched_at": "2026-11-14T04:29:05+00:00",
+      "source": "tor_elections"
+    },
+    "results_2022": {
+      "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/96d35404-44d9-49d8-95bb-fb1e5489240d/resource/3ad371de-7c51-45d3-9ea4-0b4efac5fc2b/download/2022-results.zip",
+      "sha256": "127d0a29ee82b1e9694078588999e825377cfbb2c5d9f1d1bfaf234f9dbaba76",
+      "fetched_at": "2026-11-14T04:29:04+00:00",
+      "source": "tor_elections"
+    },
+    "results_2026": {
+      "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/96d35404-44d9-49d8-95bb-fb1e5489240d/resource/8006f3bd-0a48-4e20-8cc4-4155a30cd203/download/2026-results.zip",
+      "sha256": "ce6e753558ada468ae5d7237fafd6c8bbd74e9132292f07476e85f0b3274a485",
+      "fetched_at": "2026-11-14T04:28:57+00:00",
+      "source": "tor_elections"
+    },
+    "votes_2018": {
+      "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/datastore/dump/84ce76c3-94ed-486c-818b-596fd78d1fea",
+      "sha256": "cbe154bb57595d9269efc7bad482562be6b4169ee25166fef19588af0d5f0c2d",
+      "fetched_at": "2026-11-14T04:33:18+00:00",
+      "source": "tor_votes"
+    },
+    "votes_2022": {
+      "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/datastore/dump/55ead013-2331-4686-9895-9e8145b94189",
+      "sha256": "c140a11ff24bf77b8f868e1c5b04c152e133f098679ada1683b4cc477fa9ac3f",
+      "fetched_at": "2026-11-14T04:33:20+00:00",
+      "source": "tor_votes"
+    },
+    "wards": {
+      "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/5e7a8234-f805-43ac-820f-03d7c360b588/resource/737b29e0-8329-4260-b6af-21555ab24f28/download/city-wards-data-4326.geojson",
+      "sha256": "a35851f39c83e492c7dde7a8949847844ef1697a3155bb670155a3d1812daf64",
+      "fetched_at": "2026-11-14T04:29:19+00:00",
+      "source": "tor_geo"
+    }
+  }
+}

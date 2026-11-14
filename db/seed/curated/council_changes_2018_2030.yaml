@@ -1,0 +1,282 @@
+# Hand-checked facts about Toronto City Council seats, December 2018 onward.
+#
+# The general-election winners come straight from the City's official results
+# files (open data). This file adds what those files can't tell us: term dates,
+# and every change of seat-holder between elections (resignations, deaths,
+# removals, appointments by Council, and by-elections).
+#
+# Every date carries a `basis` saying what kind of date it is:
+#   statutory           - set by law (Municipal Elections Act)
+#   official            - stated in a City record (news release, Clerk's report,
+#                         by-law) or in the resignation notice it reports
+#   by_election_day     - polling day; the official swearing-in date wasn't found
+#   reported            - from news coverage only; not yet confirmed in a City record
+# and `confidence`: high / medium / low.
+#
+# Cross-checks against the City's Council attendance and voting data are run
+# by db/seed/build/build_people_and_wards.py.
+
+terms:
+  - term: "2018-2022"
+    start: 2018-12-01
+    start_basis: statutory
+    start_confidence: medium
+    start_note: >-
+      Municipal Elections Act as it applied to the 2018 election (terms began
+      December 1 until the 2022 term). Consistent with the first Council
+      meeting on 2018-12-04. Not yet confirmed in a City record.
+    end: 2022-11-14
+    end_basis: statutory
+    end_confidence: high
+    general_election: 2018-10-22
+  - term: "2022-2026"
+    start: 2022-11-15
+    start_basis: statutory
+    start_confidence: high
+    start_note: City By-law 954-2022 and City news release on the 2022-2026 term.
+    sources:
+      - https://www.toronto.ca/legdocs/bylaws/2022/law0954.pdf
+      - https://www.toronto.ca/news/city-of-toronto-ushers-in-the-2022-2026-council-term/
+    end: 2026-11-14
+    end_basis: statutory
+    end_confidence: high
+    general_election: 2022-10-24
+  - term: "2026-2030"
+    start: 2026-11-15
+    start_basis: statutory
+    start_confidence: high
+    end: 2030-11-14
+    end_basis: statutory
+    end_confidence: high
+    general_election: 2026-10-26
+    sources:
+      - https://www.toronto.ca/wp-content/uploads/2026/10/8966-Declaration-of-Results-2026-Toronto-Municipal-Election-Oct-29-Final.pdf
+
+# Changes between general elections, in date order.
+# kind: left (resigned / died / removed) or joined (appointed / by-election).
+changes:
+  # ---------------- 2018-2022 term ----------------
+  - person: Jim Karygiannis
+    office: councillor
+    ward: 22
+    kind: left
+    reason: removed_from_office
+    date: 2020-05-28
+    basis: last_council_meeting_attended
+    confidence: low
+    note: >-
+      Removed over 2018 campaign-expense filings. First removed November 2019,
+      reinstated by the Superior Court, then removed after an appeal-court
+      ruling in June 2020 (later appeals ended September 2020). Exact date the
+      seat became vacant still to confirm; until then the date used is his
+      last Council meeting in the attendance data.
+    sources:
+      - https://www.cp24.com/news/jim-karygiannis-removed-from-council-seat-after-campaign-expense-review-1.4673209
+  - person: Nick Mantas
+    office: councillor
+    ward: 22
+    kind: joined
+    reason: by_election
+    date: 2021-01-18
+    basis: reported
+    confidence: medium
+    note: By-election 2021-01-15; reported sworn in 2021-01-18.
+    sources:
+      - https://globalnews.ca/news/7579916/nick-mantas-ward-22-scarborough-agincourt-byelection
+  - person: Joe Cressy
+    office: councillor
+    ward: 10
+    kind: left
+    reason: resigned
+    date: 2022-04-30
+    basis: official
+    confidence: high
+    sources:
+      - https://www.toronto.ca/legdocs/mmis/2022/cc/bgrd/backgroundfile-225425.pdf
+  - person: Kristyn Wong-Tam
+    office: councillor
+    ward: 13
+    kind: left
+    reason: resigned
+    date: 2022-05-04
+    basis: official
+    confidence: high
+    note: Resigned to run in the 2022 provincial election.
+    sources:
+      - https://www.toronto.ca/legdocs/mmis/2022/cc/bgrd/backgroundfile-225425.pdf
+  - person: Joe Mihevc
+    office: councillor
+    ward: 10
+    kind: joined
+    reason: appointed_by_council
+    date: 2022-06-01
+    basis: official
+    confidence: high
+    note: By-law 524-2022, appointed for the remainder of the term.
+    sources:
+      - https://www.toronto.ca/legdocs/bylaws/2022/law0524.pdf
+      - https://www.toronto.ca/news/city-council-appoints-joe-mihevc-as-councillor-for-ward-10-spadina-fort-york-and-robin-buxton-potts-for-ward-13-toronto-centre/
+  - person: Robin Buxton Potts
+    office: councillor
+    ward: 13
+    kind: joined
+    reason: appointed_by_council
+    date: 2022-06-01
+    basis: official
+    confidence: high
+    note: >-
+      Appointed the same day as Joe Mihevc. Appears in the voting data but is
+      missing from the City's attendance dataset.
+    sources:
+      - https://www.toronto.ca/news/city-council-appoints-joe-mihevc-as-councillor-for-ward-10-spadina-fort-york-and-robin-buxton-potts-for-ward-13-toronto-centre/
+  - person: Michael Ford
+    office: councillor
+    ward: 1
+    kind: left
+    reason: resigned
+    date: 2022-06-15
+    basis: reported
+    confidence: medium
+    note: Elected to the provincial legislature June 2, 2022.
+    sources:
+      - https://www.cp24.com/news/toronto-trying-again-to-fill-ward-1-etobicoke-north-seat-after-councillor-resigned-last-month-1.5997009
+  - person: Rosemarie Bryan
+    office: councillor
+    ward: 1
+    kind: joined
+    reason: appointed_by_council
+    date: 2022-06-24
+    basis: official
+    confidence: high
+    sources:
+      - https://www.toronto.ca/news/toronto-city-council-appoints-rosemarie-bryan-as-councillor-for-ward-1-etobicoke-north/
+  - person: Rosemarie Bryan
+    office: councillor
+    ward: 1
+    kind: left
+    reason: resigned
+    date: 2022-06-24
+    basis: official
+    confidence: high
+    note: Resigned hours after appointment; cast no recorded votes.
+    sources:
+      - https://www.toronto.ca/legdocs/mmis/2022/cc/bgrd/backgroundfile-228747.pdf
+  - person: Rose Milczyn
+    office: councillor
+    ward: 1
+    kind: joined
+    reason: appointed_by_council
+    date: 2022-08-15
+    basis: official
+    confidence: high
+    note: Appears in the voting data but is missing from the attendance dataset.
+    sources:
+      - https://www.toronto.ca/news/toronto-city-council-appoints-rose-milczyn-as-councillor-for-ward-1-etobicoke-north/
+  - person: Cynthia Lai
+    office: councillor
+    ward: 23
+    kind: left
+    reason: died
+    date: 2022-10-21
+    basis: reported
+    confidence: high
+    note: Died three days before the 2022 election, in which she was a candidate.
+    sources:
+      - https://www.cp24.com/news/toronto-city-councillor-cynthia-lai-dies-at-68-1.6119935
+
+  # ---------------- 2022-2026 term ----------------
+  - person: John Tory
+    office: mayor
+    kind: left
+    reason: resigned
+    date: 2023-02-17
+    basis: official
+    confidence: high
+    note: Resignation effective 5 p.m. February 17, 2023.
+    sources:
+      - https://www.toronto.ca/legdocs/mmis/2023/cc/bgrd/backgroundfile-238350.pdf
+  - person: Olivia Chow
+    office: mayor
+    kind: joined
+    reason: by_election
+    date: 2023-07-12
+    basis: reported
+    confidence: high
+    note: By-election 2023-06-26; took office 2023-07-12.
+    sources:
+      - https://www.toronto.ca/legdocs/mayoraldecisions/mayor0002.pdf
+  - person: Gary Crawford
+    office: councillor
+    ward: 20
+    kind: left
+    reason: resigned
+    date: 2023-07-26
+    basis: reported
+    confidence: medium
+    note: Resigned to run in the Scarborough-Guildwood provincial by-election.
+    sources:
+      - https://www.cbc.ca/lite/story/1.7044672
+  - person: Parthi Kandavel
+    office: councillor
+    ward: 20
+    kind: joined
+    reason: by_election
+    date: 2023-11-30
+    basis: by_election_day
+    confidence: medium
+    note: First Council meeting attended 2023-12-13.
+    sources:
+      - https://toronto.ctvnews.ca/former-tdsb-trustee-parthi-kandavel-wins-scarborough-southwest-byelection-unofficial-results-1.6667056
+  - person: Jaye Robinson
+    office: councillor
+    ward: 15
+    kind: left
+    reason: died
+    date: 2024-05-16
+    basis: reported
+    confidence: high
+    sources:
+      - https://en.wikipedia.org/wiki/Ward_15_Don_Valley_West
+  - person: Rachel Chernos Lin
+    office: councillor
+    ward: 15
+    kind: joined
+    reason: by_election
+    date: 2024-11-04
+    basis: by_election_day
+    confidence: medium
+    note: First Council meeting attended 2024-11-13.
+    sources:
+      - https://toronto.ctvnews.ca/former-tdsb-trustee-chernos-lin-wins-byelection-in-toronto-s-ward-15-1.7097791
+  - person: Jennifer McKelvie
+    office: councillor
+    ward: 25
+    kind: left
+    reason: resigned
+    date: 2025-05-09
+    basis: official
+    confidence: high
+    note: Elected federal MP April 2025; resignation effective end of day May 9, 2025.
+    sources:
+      - https://www.toronto.ca/legdocs/mmis/2025/cc/bgrd/backgroundfile-255317.pdf
+  - person: Neethan Shan
+    office: councillor
+    ward: 25
+    kind: joined
+    reason: by_election
+    date: 2025-09-29
+    basis: by_election_day
+    confidence: medium
+    note: First Council meeting attended 2025-10-08.
+    sources:
+      - https://www.toronto.ca/news/toronto-city-council-opts-for-by-election-for-ward-25-scarborough-rouge-park/
+
+# Names whose first/last split can't be inferred from the results files, which
+# list names as "Last First". Canonical form follows the City Clerk's certified
+# Declaration of Results; first/last split follows the City's results file.
+name_overrides:
+  - results_spelling: McNally Diana Chan
+    canonical_name: Diana Chan McNally
+    first_name: Diana Chan
+    last_name: McNally
+    source: https://www.toronto.ca/wp-content/uploads/2026/10/8966-Declaration-of-Results-2026-Toronto-Municipal-Election-Oct-29-Final.pdf

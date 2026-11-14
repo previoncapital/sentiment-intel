@@ -8,3 +8,4 @@ technical choices). Schema, taxonomy and source decisions all go here.
 |---|---|---|
 | 2026-11-14 | [First verification pass on the spec's "Things to verify"](2026-11-14-verification-pass.md) | Findings only; spec edits await owner approval |
 | 2026-11-14 | Keep the original Word documents in `docs/originals/` and add plain-text `.md` copies alongside, so every future session can read them | Claude Code (routine) |
+| 2026-11-14 | [Seed data: ward map and every mayor and councillor since Dec 2018](2026-11-14-council-and-ward-seed-data.md) | Claude Code (routine); for owner review |

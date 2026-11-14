@@ -1,0 +1,8 @@
+# Local working copies of downloaded source files (raw store). These are
+# re-downloadable; in production they live in object storage, not in git.
+data/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env

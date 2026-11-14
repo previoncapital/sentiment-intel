@@ -1,0 +1,22 @@
+[project]
+name = "sentiment-intel"
+version = "0.1.0"
+description = "Toronto housing and land-use political intelligence — Phase 1 data platform"
+requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.27",
+    "openpyxl>=3.1",
+    "shapely>=2.0",
+    "matplotlib>=3.8",
+    "pdfplumber>=0.11",
+    "pyyaml>=6.0",
+]
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.uv]
+package = false
