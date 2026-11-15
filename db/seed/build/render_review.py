@@ -24,6 +24,9 @@ from matplotlib.patches import Patch  # noqa: E402
 from shapely.geometry import shape  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[3]
+import sys  # noqa: E402
+
+sys.path.insert(0, str(REPO))
 SEED = REPO / "db" / "seed"
 OUT = REPO / "docs" / "seed-review"
 
@@ -205,30 +208,12 @@ def render_table(terms: list[dict]) -> Path:
 
 
 def render_pdf(md_path: Path, map_path: Path) -> Path:
-    """Make a PDF the owner can open anywhere (needs pandoc and Node Playwright)."""
-    import subprocess
-    import tempfile
+    """Owner-facing PDF of the seat history, with the ward map on top."""
+    from tools.owner_pdf import markdown_to_pdf
 
-    tmp = Path(tempfile.mkdtemp())
-    html = tmp / "page.html"
-    css = ("body{font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;font-size:11pt;"
-           "line-height:1.45;max-width:760px;margin:auto;color:#1f2933}h1{font-size:20pt}"
-           "h2{margin-top:1.6em;border-bottom:1px solid #ccd;padding-bottom:.2em}"
-           "h3{margin-bottom:.2em}ul{margin-top:.2em}table{border-collapse:collapse;font-size:9.5pt}"
-           "td,th{border:1px solid #ccd;padding:3px 6px}img{width:100%}")
     md = md_path.read_text().replace(
         "## Mayor", f"![Ward map]({map_path.resolve().as_uri()})\n\n## Mayor", 1)
-    (tmp / "page.md").write_text(md)
-    subprocess.run(["pandoc", str(tmp / "page.md"), "-s", "-o", str(html),
-                    "--metadata", "pagetitle=Council seats 2018-2030", "-V", f"header-includes=<style>{css}</style>"],
-                   check=True)
-    pdf = md_path.with_suffix(".pdf")
-    js = (f"const {{chromium}}=require('playwright');(async()=>{{const b=await chromium.launch();"
-          f"const p=await b.newPage();await p.goto('file://{html}');"
-          f"await p.pdf({{path:'{pdf}',format:'Letter',margin:{{top:'18mm',bottom:'18mm',left:'15mm',right:'15mm'}}}});"
-          f"await b.close();}})();")
-    subprocess.run(["node", "-e", js], check=True)
-    return pdf
+    return markdown_to_pdf(md, md_path.with_suffix(".pdf"), "Council seats 2018-2030")
 
 
 if __name__ == "__main__":

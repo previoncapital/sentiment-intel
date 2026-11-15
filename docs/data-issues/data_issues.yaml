@@ -1,0 +1,261 @@
+# Data issues register
+#
+# Every discrepancy, gap, error or unconfirmed fact found in a source, so it can
+# be worked around now and resolved later. Later loaded into a `data_issue`
+# table; rendered for the owner by tools/render_data_issues.py.
+#
+# kind:      data_error | missing_data | access | source_quirk | unconfirmed_fact |
+#            spec_correction | licensing_privacy
+# severity:  high (could make a report wrong or block a milestone) |
+#            medium (needs a workaround) | low (cosmetic or easily handled)
+# status:    open | workaround_in_place | resolved | wont_fix
+# resolver:  who can actually fix it at the source
+
+issues:
+  - id: DI-001
+    title: Two appointed councillors missing from Council attendance data
+    source: tor_attendance (Members of Toronto City Council - Meeting Attendance, 2018-2022)
+    found: 2026-11-14
+    kind: data_error
+    severity: medium
+    description: >-
+      Robin Buxton Potts (Ward 13, appointed 2022-06-01) and Rose Milczyn (Ward 1,
+      appointed 2022-08-15) voted at Council but never appear in the attendance
+      file. Members listed per Council session drop from 26 to 24 in May 2022
+      and stay there; Joe Mihevc, appointed the same day as Buxton Potts, was added.
+    evidence: >-
+      Same gap in all four published versions (datastore CSV, CSV, JSON, XML;
+      refreshed 2026-02-20). Both names present in the voting record.
+    impact: Attendance can't be used alone to decide who was in office or to compute attendance rates for 2022.
+    workaround: Office terms come from election results and appointments; attendance used only as a cross-check.
+    status: workaround_in_place
+    resolver: City of Toronto Open Data team / City Clerk's Office
+    next_action: Ask the open data team (opendata@toronto.ca) why the two appointees are missing. Needs owner approval (contact with the City).
+
+  - id: DI-002
+    title: Most 2018-2022 Council votes have no date
+    source: tor_votes (Voting Record, 2018-2022)
+    found: 2026-11-14
+    kind: missing_data
+    severity: medium
+    description: >-
+      53,034 of 61,074 rows (87%) have a blank date. Every committee vote is
+      dated; full Council votes are dated only for April-November 2020 (the first
+      virtual meetings). No rows in that term carry a time of day.
+    evidence: Same in every published version of the file.
+    impact: Votes can't be placed on a timeline or matched to video without another source.
+    workaround: Restore dates from the City's meeting-schedule dataset using the meeting code in each agenda item number.
+    status: open
+    resolver: Us (workaround); City Clerk's Office (source fix)
+    next_action: Build the date restoration in Milestone M1 and check it against Council minutes for a sample.
+
+  - id: DI-003
+    title: Mixed date formats and 24-hour times labelled AM/PM in 2022-2026 votes
+    source: tor_votes (Voting Record, 2022-2026)
+    found: 2026-11-14
+    kind: source_quirk
+    severity: low
+    description: >-
+      Council votes carry date and time ("2022-11-23 15:17 PM" - a 24-hour time
+      with an AM/PM label); most committee votes carry the date only.
+    evidence: 36,396 rows use the 24-hour-plus-AM/PM form.
+    impact: A naive parser could reject or misread the times.
+    workaround: Parse the time as 24-hour and ignore the AM/PM label; keep the original text.
+    status: open
+    resolver: Us
+    next_action: Handle in the M1 voting-record connector, with a test.
+
+  - id: DI-004
+    title: Agenda item codes use the council year, not the calendar year
+    source: tor_votes; TMMIS
+    found: 2026-11-14
+    kind: source_quirk
+    severity: medium
+    description: >-
+      Items at the first meetings of a new Council carry the next year's code
+      (votes on 2022-11-23 are coded "2023.FM1.8").
+    evidence: 1,601 votes in Nov-Dec 2022 coded 2023.
+    impact: Matching items to dates by the year in the code would put them in the wrong year.
+    workaround: Always link and date items by meeting date, never by the code's year.
+    status: workaround_in_place
+    resolver: n/a (by design)
+    next_action: None; documented for connector builders.
+
+  - id: DI-005
+    title: Garbled accented character in a member's name
+    source: tor_votes (Voting Record, 2018-2022)
+    found: 2026-11-14
+    kind: data_error
+    severity: low
+    description: "\"Ana Bailão\" appears as \"Ana BailÃ£o\" (text encoding error)."
+    evidence: Present in the City's file.
+    impact: Name matching would fail without repair.
+    workaround: The build repairs this kind of encoding error automatically.
+    status: workaround_in_place
+    resolver: City of Toronto Open Data team
+    next_action: Mention when contacting the open data team about DI-001.
+
+  - id: DI-006
+    title: City's council agenda website blocks automated access from cloud servers
+    source: tmmis (secure.toronto.ca/council; app.toronto.ca/tmmis)
+    found: 2026-11-14
+    kind: access
+    severity: high
+    description: >-
+      secure.toronto.ca returns "Access Denied" (HTTP 403) to this environment
+      however the client identifies itself; app.toronto.ca drops the connection.
+      Document PDFs on www.toronto.ca/legdocs download normally.
+    evidence: Tested 2026-11-14 with honest and default client identifiers.
+    impact: Blocks agenda-item pages, decision text and Council minutes (Milestone M3), and confirming several dates (DI-011).
+    workaround: None yet. Do not disguise the client.
+    status: open
+    resolver: City Clerk's Office; choice of hosting provider
+    next_action: Test from the chosen hosting provider; raise in the letter to the Clerk (docs/setup/letter-to-city-clerk-draft.md).
+
+  - id: DI-007
+    title: Campaign contributions for 2022 and 2026 not on open data
+    source: tor_elections (Elections - Campaign Contributions)
+    found: 2026-11-14
+    kind: missing_data
+    severity: medium
+    description: The open data portal has contributions for 2018 only; later years are in the City's Election Financial Disclosure web app.
+    evidence: Dataset last updated 2023-04-26 with 2018 files only.
+    impact: No donor data for the current or previous council without another route.
+    workaround: None yet.
+    status: open
+    resolver: City Clerk's Office (Elections)
+    next_action: Request bulk files (in the letter to the Clerk).
+
+  - id: DI-008
+    title: Election results published without a licence
+    source: tor_elections (Elections - Official Results)
+    found: 2026-11-14
+    kind: licensing_privacy
+    severity: low
+    description: The dataset's licence field says "License not specified"; other City datasets use the Open Government Licence - Toronto.
+    evidence: CKAN metadata, 2026-11-14.
+    impact: Reuse terms for results are technically unclear.
+    workaround: Use with attribution, as for other City open data; flag for legal review.
+    status: open
+    resolver: City of Toronto Open Data team
+    next_action: Ask with DI-001.
+
+  - id: DI-009
+    title: Tribunal case history before early 2026 may already be gone
+    source: olt_cases (OLT case status portal)
+    found: 2026-11-14
+    kind: missing_data
+    severity: high
+    description: >-
+      Closed cases stay on the case-status service for two years after closing,
+      but only since 2026-03-13; before that, six weeks. Cases closed before
+      roughly early 2026 may no longer be listed.
+    evidence: OLT news post of 2026-03-13; portal search returns 4,170 Toronto records.
+    impact: Hearing-event history for older appeals must come from decisions instead; outcome timelines will be thinner before 2026.
+    workaround: Recover outcomes from OLT decisions and City Solicitor reports; snapshot the portal daily from now on.
+    status: open
+    resolver: Ontario Land Tribunal (bulk/historical access)
+    next_action: Start daily snapshots once hosting exists; ask the Tribunal about historical data.
+
+  - id: DI-010
+    title: Some council term dates not confirmed in a City record
+    source: db/seed/curated/council_changes_2018_2030.yaml
+    found: 2026-11-15
+    kind: unconfirmed_fact
+    severity: low
+    description: >-
+      Still unconfirmed: oath dates for Parthi Kandavel (Ward 20, 2023) and
+      Neethan Shan (Ward 25, 2025) - first Council meeting attended used;
+      the exact date of the August 2020 stay reinstating Jim Karygiannis -
+      first news report used; the 2018-2022 term start in a City record -
+      legal start Dec 1, oath at the Dec 4 inaugural meeting.
+    evidence: Each date is labelled with its basis and confidence in the seed data.
+    impact: Dates may be off by a few days; no effect on votes or applications.
+    workaround: Dates labelled as estimates.
+    status: open
+    resolver: Us (Council minutes, once DI-006 is solved)
+    next_action: Confirm from Council minutes.
+
+  - id: DI-011
+    title: Name order in election results differs from common usage
+    source: tor_elections (2026 results)
+    found: 2026-11-14
+    kind: source_quirk
+    severity: low
+    description: The results file lists the Ward 4 winner as "McNally Diana Chan"; the Clerk's declaration prints "Diana Chan McNally".
+    evidence: 2026 poll-by-poll results vs. certified Declaration of Results.
+    impact: Automatic first/last name splitting gets this name wrong.
+    workaround: Name override in the seed data, with source; all 2026 winners now cross-checked against the declaration.
+    status: workaround_in_place
+    resolver: Us
+    next_action: None.
+
+  - id: DI-012
+    title: Committee of Adjustment decision values spelled inconsistently
+    source: tor_coa (Committee of Adjustment Applications)
+    found: 2026-11-14
+    kind: source_quirk
+    severity: low
+    description: '"Approved on Condition", "Approved on condition", "Approved with Conditions", "conditional approval", "approved" etc.; 3,608 closed applications have no decision value.'
+    evidence: Closed applications since 2017 (34,239 rows).
+    impact: Approval-rate counts would be wrong without normalising.
+    workaround: Map to a standard set of outcomes in the M1 connector; keep the original text.
+    status: open
+    resolver: Us
+    next_action: Build the mapping in M1 and investigate the blank decisions.
+
+  - id: DI-013
+    title: Personal contact details in open datasets the licence doesn't cover
+    source: tor_dev_apps; tor_coa
+    found: 2026-11-14
+    kind: licensing_privacy
+    severity: medium
+    description: Applicant/agent contact names, emails and phones are included, but the open data licence excludes personal information.
+    evidence: 7,591 development applications have a contact email.
+    impact: Republishing them could breach the licence or privacy law.
+    workaround: Store as restricted fields; never show in search or reports.
+    status: workaround_in_place
+    resolver: Us; legal review
+    next_action: Include in the privacy review.
+
+  - id: DI-014
+    title: TLAB decisions before February 2023 not published online
+    source: tor_tlab
+    found: 2026-11-14
+    kind: missing_data
+    severity: medium
+    description: TLAB decisions from 2023-02-01 are on CanLII only; earlier ones must be requested by email (tlab@toronto.ca), apart from some PDFs on toronto.ca.
+    evidence: TLAB "Schedule & Decisions" page.
+    impact: Appeal outcomes for 2018-2023 need the TLAB appeals dataset plus a request.
+    workaround: The TLAB appeals open dataset gives status and dates for every appeal since 2017.
+    status: open
+    resolver: TLAB; CanLII (access to post-2023 decisions)
+    next_action: Owner to request older decisions; request CanLII access.
+
+  - id: DI-015
+    title: Technical Spec says development applications start in 2021
+    source: docs/technical-spec.md (tor_dev_apps)
+    found: 2026-11-14
+    kind: spec_correction
+    severity: low
+    description: The dataset goes back to 2008 (18,615 of 26,713 applications submitted 2008-2020).
+    evidence: Live dataset, 2026-11-14.
+    impact: Less rebuilding from TMMIS is needed than the spec assumes.
+    workaround: n/a
+    status: open
+    resolver: Owner (approve spec edit)
+    next_action: Approve the proposed spec edits in docs/decisions/2026-11-14-verification-pass.md.
+
+  - id: DI-016
+    title: Voting data lags behind Council
+    source: tor_votes
+    found: 2026-11-14
+    kind: missing_data
+    severity: low
+    description: Latest vote in the open data is 2026-08-05 (last Council votes 2026-07-30); there is no 2026-2030 file yet, though the new Council meets 2026-11-18/19.
+    evidence: Dataset as of 2026-11-14.
+    impact: The new term won't appear until the City publishes it.
+    workaround: None needed yet.
+    status: open
+    resolver: City of Toronto Open Data team
+    next_action: Check for the new file after the first meeting; measure the publication delay.

@@ -12,6 +12,8 @@ session.
 - **Sources:** `docs/source-registry.md` (every source considered, built or not)
 - **Decisions log:** `docs/decisions/` (one dated file per decision)
 - **Setup notes:** `docs/setup/`
+- **Data issues log:** `docs/data-issues/data_issues.yaml` (every discrepancy, gap or
+  unconfirmed fact, and its status)
 
 ## Who you are working with
 
@@ -68,6 +70,17 @@ decisions.
 - Never disguise the client (for example, a fake browser identity) to get past
   a site that blocks automated access. Record the block and raise it with the
   owner instead.
+
+## Log every discrepancy
+
+Whenever a source disagrees with another source, has gaps or errors, or a fact
+can't be confirmed, add an entry to `docs/data-issues/data_issues.yaml` (what's
+wrong, evidence, why it matters, the workaround, who can fix it, next step,
+status). Dig into the cause before logging it: check every published version
+of the file, look for a pattern, and explain it in plain language. Never
+quietly patch over a discrepancy. Update the entry when it's resolved, and
+regenerate the owner's PDF with `uv run python tools/render_data_issues.py`.
+Owner-facing pages are delivered as PDFs (the owner can't open Markdown files).
 
 ## Source discovery is a standing part of the job
 

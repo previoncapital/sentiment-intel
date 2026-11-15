@@ -32,7 +32,9 @@ historical backfill (mostly transcription and AI tagging in M3–M4).
   - (b) A forwarding alias on a domain you already have: **$0**.
   - (c) A free webmail address: $0, but it looks less credible to the City.
 - **Decided 2026-11-14:** the owner will use an address on their own domain
-  (option b, $0). Still to choose: the exact address.
+  ($0). The domain's email is hosted by Google. Recommended set-up: a Google
+  Group such as `data@` (free, keeps project mail out of the main inbox).
+  Still to choose: the exact address.
 
 ### 3. Cloud hosting account (database, file storage, scheduler)
 This hosts the database, keeps an unchanged copy of every file collected, and
