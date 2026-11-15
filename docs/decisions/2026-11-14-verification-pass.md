@@ -18,8 +18,9 @@ means I saw it on the live source today.
   `docs/source-registry.md`. All carry the Open Government Licence – Toronto,
   except Election Results ("License not specified").
 - **Corrections to the spec:**
-  - Development Applications go back to **2008**, not 2021 (18,615 of 26,713
-    were submitted 2008–2020). Pre-2021 applications that are not in the
+  - Development Applications go back to **2008**, not 2021 (5,699 of 8,639
+    applications were submitted 2008–2020; corrected 2026-11-15 — the file has
+    one row per address, 26,713 rows). Pre-2021 applications that are not in the
     dataset (if any) still need TMMIS/AIC.
   - The 2018–22 voting file has **no date on 53,034 of 61,074 rows (87%)**.
     Dates must come from the meeting schedule dataset via the item code.

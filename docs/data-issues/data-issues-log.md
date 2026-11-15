@@ -2,18 +2,23 @@
 
 Every discrepancy, gap or unconfirmed fact we find in a source, with what we're doing about it now and who could fix it. Updated as issues are found or resolved.
 
-**Summary:** 11 open, 5 worked around — 16 in total.
+**Summary:** 13 open, 8 worked around — 21 in total.
 
 | ID | Issue | Severity | Status | Who can fix it |
 |----|------------------------|------|----------|----------|
 | DI-006 | City's council agenda website blocks automated access from cloud servers | high | Open | City Clerk's Office; choice of hosting provider |
 | DI-009 | Tribunal case history before early 2026 may already be gone | high | Open | Ontario Land Tribunal (bulk/historical access) |
+| DI-020 | Application status "Closed" is ambiguous, and status labels are out of date | high | Open | Us (outcomes from decisions); City Planning (status definitions) |
+| DI-021 | Most local planning decisions have no recorded vote | high | Open | Us (M3 document processing) |
 | DI-001 | Two appointed councillors missing from Council attendance data | medium | Worked around (still open at source) | City of Toronto Open Data team / City Clerk's Office |
-| DI-002 | Most 2018-2022 Council votes have no date | medium | Open | Us (workaround); City Clerk's Office (source fix) |
+| DI-002 | Most 2018-2022 Council votes have no date | medium | Worked around (still open at source) | Us (workaround); City Clerk's Office (source fix) |
 | DI-004 | Agenda item codes use the council year, not the calendar year | medium | Worked around (still open at source) | n/a (by design) |
 | DI-007 | Campaign contributions for 2022 and 2026 not on open data | medium | Open | City Clerk's Office (Elections) |
 | DI-013 | Personal contact details in open datasets the licence doesn't cover | medium | Worked around (still open at source) | Us; legal review |
 | DI-014 | TLAB decisions before February 2023 not published online | medium | Open | TLAB; CanLII (access to post-2023 decisions) |
+| DI-017 | Development-application map points sometimes fall in a different ward from the listed ward | medium | Worked around (still open at source) | Us (address-point geocoding in M1); City Planning (source) |
+| DI-018 | TLAB appeals and Committee of Adjustment files share no file number | medium | Worked around (still open at source) | City of Toronto Open Data team (add the C of A file number to the TLAB dataset) |
+| DI-019 | The "did anyone object at the hearing?" field is mostly blank for Committee of Adjustment files | medium | Open | City Planning / Committee of Adjustment |
 | DI-003 | Mixed date formats and 24-hour times labelled AM/PM in 2022-2026 votes | low | Open | Us |
 | DI-005 | Garbled accented character in a member's name | low | Worked around (still open at source) | City of Toronto Open Data team |
 | DI-008 | Election results published without a licence | low | Open | City of Toronto Open Data team |
@@ -47,6 +52,28 @@ Every discrepancy, gap or unconfirmed fact we find in a source, with what we're 
 - **Who can fix it:** Ontario Land Tribunal (bulk/historical access)
 - **Next step:** Start daily snapshots once hosting exists; ask the Tribunal about historical data.
 
+### DI-020 — Application status "Closed" is ambiguous, and status labels are out of date
+
+*Quirk to handle · severity high · Open · found 2026-11-15*
+
+- **What's wrong:** "Closed" covers approved applications, applications replaced by a revised filing (these carry a parent file number) and withdrawals. Of rezonings filed since 2023 marked Closed, the development pipeline lists 121 as Active (approved, proceeding) and 60 as Under Review, so the two City datasets disagree for some. Appeal statuses still say "OMB Appeal" and "OMB Approved" for 2025-2026 files, although the OMB was replaced in 2018.
+- **Evidence:** Cross-tabulation of the two datasets, 2026-11-15.
+- **Why it matters:** Approval rates and "what usually happens here" signals would be wrong if "Closed" were read as an outcome.
+- **What we do meanwhile:** Show both statuses; take outcomes from Council decisions, by-laws and OLT cases (M2-M3).
+- **Who can fix it:** Us (outcomes from decisions); City Planning (status definitions)
+- **Next step:** Build the application outcome from decisions in M2-M3; ask City Planning for status definitions.
+
+### DI-021 — Most local planning decisions have no recorded vote
+
+*Quirk to handle · severity high · Open · found 2026-11-15*
+
+- **What's wrong:** In Ward 12, 35 agenda items since Dec 2018 name an address from one of the ward's applications, but they carry only 41 recorded votes, and most of the 97 rezoning applications have none. Council adopts most planning items without a recorded vote (in bulk, or by show of hands).
+- **Evidence:** Ward 12 check pack, 2026-11-15.
+- **Why it matters:** A councillor's position on most projects in their own ward is not in the voting record. Ward-posture signals will need motions (who moved what), staff recommendations and debate, not votes alone.
+- **What we do meanwhile:** Report votes only where recorded and say so; add motions and minutes in M3.
+- **Who can fix it:** Us (M3 document processing)
+- **Next step:** Prioritise motion and minutes extraction in M3; confirm with the owner how ward posture should be shown.
+
 ### DI-001 — Two appointed councillors missing from Council attendance data
 
 *Error in the source data · severity medium · Worked around (still open at source) · found 2026-11-14*
@@ -60,14 +87,14 @@ Every discrepancy, gap or unconfirmed fact we find in a source, with what we're 
 
 ### DI-002 — Most 2018-2022 Council votes have no date
 
-*Missing data · severity medium · Open · found 2026-11-14*
+*Missing data · severity medium · Worked around (still open at source) · found 2026-11-14*
 
 - **What's wrong:** 53,034 of 61,074 rows (87%) have a blank date. Every committee vote is dated; full Council votes are dated only for April-November 2020 (the first virtual meetings). No rows in that term carry a time of day.
 - **Evidence:** Same in every published version of the file.
 - **Why it matters:** Votes can't be placed on a timeline or matched to video without another source.
-- **What we do meanwhile:** Restore dates from the City's meeting-schedule dataset using the meeting code in each agenda item number.
+- **What we do meanwhile:** Restore dates from the City's meeting-schedule dataset. Tested on 2022-2026 votes that do have dates: items coded to a Council meeting land in the right meeting 100% of the time (19,237 of 19,237); committee items voted at Council, dated to the next Council meeting after the committee, 99% (21,977 of 22,208 - the misses were deferred to a later meeting). Restored dates are labelled with their method.
 - **Who can fix it:** Us (workaround); City Clerk's Office (source fix)
-- **Next step:** Build the date restoration in Milestone M1 and check it against Council minutes for a sample.
+- **Next step:** Use in the M1 voting-record connector; confirm a sample against Council minutes when accessible.
 
 ### DI-004 — Agenda item codes use the council year, not the calendar year
 
@@ -112,6 +139,39 @@ Every discrepancy, gap or unconfirmed fact we find in a source, with what we're 
 - **What we do meanwhile:** The TLAB appeals open dataset gives status and dates for every appeal since 2017.
 - **Who can fix it:** TLAB; CanLII (access to post-2023 decisions)
 - **Next step:** Owner to request older decisions; request CanLII access.
+
+### DI-017 — Development-application map points sometimes fall in a different ward from the listed ward
+
+*Error in the source data · severity medium · Worked around (still open at source) · found 2026-11-15*
+
+- **What's wrong:** For about 7% of address rows (1,859 of 26,713), the X/Y map point falls in a different ward from the ward listed. Median distance from the listed ward is 74 m and 98% are within 500 m, mostly along boundary streets such as Yonge and Bay; the point appears to be one location per application, not per address. Checked cases (e.g. 2 Carlton St, listed Ward 13, east of Yonge) show the listed ward is right and the point is off. Ten applications have clearly broken points (up to ~300 km away). 46 applications carry a ward value that doesn't exist on the current map (old 44-ward numbers such as 27, 28, 42, blanks, or "YY"), mostly 2008-2012.
+- **Evidence:** Point-in-polygon check of every row against the 2018 ward map, 2026-11-15.
+- **Why it matters:** Assigning wards by map point alone would misplace boundary projects; a few applications have no usable ward.
+- **What we do meanwhile:** Use the City's listed ward; flag rows whose point is more than 100 m outside it for review; geocode from address points in M1.
+- **Who can fix it:** Us (address-point geocoding in M1); City Planning (source)
+- **Next step:** In M1, geocode every address to the City's address points and compare.
+
+### DI-018 — TLAB appeals and Committee of Adjustment files share no file number
+
+*Missing data · severity medium · Worked around (still open at source) · found 2026-11-15*
+
+- **What's wrong:** The TLAB appeals dataset's file number (e.g. "17 156134 S45 23 TLAB") and folder ID match nothing in the Committee of Adjustment data (reference numbers like "A0558/25TEY"). Older TLAB numbers also embed pre-2018 ward numbers. The spec assumed a shared municipal file number.
+- **Evidence:** 0 of 2,150 appeals match by number or folder ID; 1,282 (60%) match by street address on a first try.
+- **Why it matters:** Appeals can only be linked to the decision appealed by address and date, which needs review.
+- **What we do meanwhile:** Link by same address with the appeal filed after the C of A application; mark every link "needs review".
+- **Who can fix it:** City of Toronto Open Data team (add the C of A file number to the TLAB dataset)
+- **Next step:** Improve address matching in M1; ask the open data team whether the C of A number can be added.
+
+### DI-019 — The "did anyone object at the hearing?" field is mostly blank for Committee of Adjustment files
+
+*Missing data · severity medium · Open · found 2026-11-15*
+
+- **What's wrong:** The ANYONE_OBJECT_AT_MEETING field is blank for 29,382 of 34,239 closed files (86%); Yes 1,185, No 3,672.
+- **Evidence:** Closed applications since 2017.
+- **Why it matters:** Can't be used as a measure of neighbourhood opposition at C of A.
+- **What we do meanwhile:** Measure opposition from letters and deputations instead (M3).
+- **Who can fix it:** City Planning / Committee of Adjustment
+- **Next step:** Check whether the field is filled consistently in some panels or years.
 
 ### DI-003 — Mixed date formats and 24-hour times labelled AM/PM in 2022-2026 votes
 
@@ -183,7 +243,7 @@ Every discrepancy, gap or unconfirmed fact we find in a source, with what we're 
 
 *Correction to our spec · severity low · Open · found 2026-11-14*
 
-- **What's wrong:** The dataset goes back to 2008 (18,615 of 26,713 applications submitted 2008-2020).
+- **What's wrong:** The dataset goes back to 2008: 5,699 of its 8,639 applications were submitted 2008-2020. (The file has 26,713 rows because an application covering several street addresses has one row per address; an earlier note in this project counted rows as applications. Corrected 2026-11-15.)
 - **Evidence:** Live dataset, 2026-11-14.
 - **Why it matters:** Less rebuilding from TMMIS is needed than the spec assumes.
 - **What we do meanwhile:** n/a

@@ -1,0 +1,258 @@
+# Issue taxonomy, version 0 (draft for owner and planning-advisor review)
+#
+# Every piece of evidence (a vote, motion, staff report passage, letter,
+# deputation statement) can be tagged with zero or more issues below, plus a
+# stance, an actor class and a strength. Definitions are written so that a
+# person and an AI model apply them the same way: each issue says what counts,
+# what doesn't (and where it goes instead), and gives examples.
+#
+# `supply_direction` records which side of the issue adds housing supply,
+# used for the "support rate" signal (share of a councillor's votes on the
+# pro-housing side). It is a product judgement for the owner to confirm, and
+# is left empty where there is no clear direction.
+#
+# Status: v0, not yet tested. The plan requires testing on 200-300 real
+# Council items before fixing it (Gate 1).
+
+version: "0.1"
+status: draft
+date: 2026-11-15
+
+domains:
+  - code: BF
+    label: Built form
+    definition: The physical size, shape and design of buildings.
+    issues:
+      - code: BF.HEIGHT
+        label: Height
+        definition: Building height in storeys or metres, including requests to add or remove storeys.
+        includes: [motions to reduce storeys, letters objecting to "too tall", height limits in zoning or secondary plans]
+        excludes: [shadow effects of height -> BF.SHADOW_WIND, total floor area -> BF.DENSITY]
+        supply_direction: more height
+      - code: BF.DENSITY
+        label: Density and floor space index (FSI)
+        definition: Amount of floor area or units on a site (FSI, gross floor area, unit count, "overdevelopment").
+        includes: [FSI caps, unit counts, lot coverage for density purposes]
+        excludes: [height alone -> BF.HEIGHT]
+        supply_direction: more density
+      - code: BF.MASSING
+        label: Massing, setbacks and angular planes
+        definition: How bulk is arranged on the site - setbacks, stepbacks, angular planes, podium design, transition to neighbours.
+        includes: [rear and side yard setbacks, transition to Neighbourhoods, minor variances for setbacks]
+        excludes: [distance between towers -> BF.TOWER_SEPARATION]
+        supply_direction: fewer massing constraints
+      - code: BF.SHADOW_WIND
+        label: Shadow and wind
+        definition: Shadow impacts on parks, streets, yards and neighbouring homes; wind conditions at grade.
+        includes: [shadow studies, park shadowing policies, pedestrian wind comfort]
+        excludes: []
+        supply_direction: ""
+      - code: BF.TOWER_SEPARATION
+        label: Tower separation
+        definition: Distance between towers and to lot lines, privacy and sky view between tall buildings.
+        includes: [tall building guideline separation distances]
+        excludes: [general setbacks -> BF.MASSING]
+        supply_direction: smaller separation
+      - code: BF.ARCHITECTURE
+        label: Architecture and materials
+        definition: Design quality, facade treatment, materials, public realm design and Design Review Panel comments on appearance.
+        includes: [Design Review Panel design critique, 'objections that a design is "out of keeping", where about appearance']
+        excludes: [character of the neighbourhood as a whole -> HC.CHARACTER]
+        supply_direction: ""
+
+  - code: HT
+    label: Housing type and tenure
+    definition: What kind of housing is built and how it is held.
+    issues:
+      - code: HT.MULTIPLEX
+        label: Multiplexes (4 to 6 units)
+        definition: Permission for, or applications for, fourplexes, fiveplexes and sixplexes in low-rise areas (EHON).
+        includes: [EHON multiplex votes, ward-by-ward sixplex permissions]
+        excludes: [garden and laneway suites -> HT.GARDEN_LANEWAY]
+        supply_direction: permit more
+      - code: HT.GARDEN_LANEWAY
+        label: Garden and laneway suites
+        definition: Secondary units in rear yards or on laneways, and secondary suites within houses.
+        includes: []
+        excludes: []
+        supply_direction: permit more
+      - code: HT.MIDRISE
+        label: Mid-rise and major-street housing
+        definition: Mid-rise buildings (roughly 5 to 11 storeys), including as-of-right permissions on major streets.
+        includes: [EHON major streets, Avenues mid-rise guidelines as a building type]
+        excludes: [the Avenues as a planning designation -> LP.AVENUES]
+        supply_direction: permit more
+      - code: HT.RENTAL
+        label: Purpose-built rental
+        definition: New rental buildings and incentives or conditions for rental tenure.
+        includes: [rental tenure requirements, rental incentives]
+        excludes: [replacing rental units lost to demolition -> AF.RENTAL_REPLACEMENT, below-market rents -> AF]
+        supply_direction: more rental
+      - code: HT.CONDOMINIUM
+        label: Condominium
+        definition: Ownership housing in condominium form; draft plans of condominium; condo conversions.
+        includes: []
+        excludes: []
+        supply_direction: ""
+      - code: HT.ROOMING
+        label: Rooming houses (multi-tenant houses)
+        definition: Licensing, permission and regulation of multi-tenant (rooming) houses.
+        includes: []
+        excludes: []
+        supply_direction: permit more
+      - code: HT.SUPPORTIVE_SHELTER
+        label: Supportive housing and shelters
+        definition: Supportive and transitional housing, modular housing, and shelters or respite sites.
+        includes: [community objections to shelter or supportive sites]
+        excludes: []
+        supply_direction: permit more
+
+  - code: AF
+    label: Affordability
+    definition: Below-market housing and the protection of existing affordable units.
+    issues:
+      - code: AF.INCLUSIONARY
+        label: Inclusionary zoning
+        definition: Mandatory affordable-unit requirements in new development and their rates, areas and phase-in.
+        includes: []
+        excludes: []
+        supply_direction: ""
+      - code: AF.SECURED_UNITS
+        label: Affordable units secured by agreement
+        definition: Affordable units secured case by case (Section 37/45 agreements, contribution agreements, incentives).
+        includes: []
+        excludes: [inclusionary zoning policy -> AF.INCLUSIONARY]
+        supply_direction: ""
+      - code: AF.RENTAL_REPLACEMENT
+        label: Rental replacement and demolition
+        definition: Replacing rental units lost to demolition or conversion, and tenant relocation assistance.
+        includes: [Chapter 667 rental demolition permits, tenant assistance plans]
+        excludes: []
+        supply_direction: ""
+      - code: AF.CITY_LAND
+        label: City-owned land programs
+        definition: Housing on public land (Housing Now, CreateTO, Toronto Builds, TCHC redevelopment).
+        includes: []
+        excludes: []
+        supply_direction: proceed
+
+  - code: LP
+    label: Location policy
+    definition: Where growth is directed, through Official Plan designations and provincial policy.
+    issues:
+      - code: LP.MTSA
+        label: Major transit station areas
+        definition: Delineation of, and minimum densities in, major transit station areas (MTSAs and PMTSAs).
+        includes: []
+        excludes: [general arguments for growth near transit outside MTSA policy -> LP.TRANSIT_GROWTH]
+        supply_direction: higher minimums
+      - code: LP.AVENUES
+        label: Avenues and major streets
+        definition: The Avenues designation and growth on major streets as a planning policy.
+        includes: [Avenue studies]
+        excludes: [mid-rise as a building type -> HT.MIDRISE]
+        supply_direction: more growth
+      - code: LP.NEIGHBOURHOODS
+        label: Neighbourhoods designation
+        definition: Growth, permissions and protections in areas designated Neighbourhoods in the Official Plan.
+        includes: [redesignating Neighbourhoods sites for taller buildings]
+        excludes: [multiplex permissions -> HT.MULTIPLEX]
+        supply_direction: more growth
+      - code: LP.EMPLOYMENT_CONVERSION
+        label: Employment land conversions
+        definition: Requests to convert employment lands to allow residential uses.
+        includes: []
+        excludes: []
+        supply_direction: permit conversion
+      - code: LP.TRANSIT_GROWTH
+        label: Growth near transit
+        definition: General arguments about concentrating growth near transit, outside the formal MTSA process.
+        includes: []
+        excludes: [MTSA delineation -> LP.MTSA]
+        supply_direction: more growth
+
+  - code: HC
+    label: Heritage and character
+    definition: Protection of heritage resources and neighbourhood character.
+    issues:
+      - code: HC.HERITAGE
+        label: Heritage listing and designation
+        definition: Listing or designating individual properties under the Ontario Heritage Act, and alterations to them.
+        includes: [designations brought forward while a development application is under review]
+        excludes: []
+        supply_direction: ""
+      - code: HC.HCD
+        label: Heritage conservation districts
+        definition: Studies, plans and permits within heritage conservation districts.
+        includes: []
+        excludes: []
+        supply_direction: ""
+      - code: HC.CHARACTER
+        label: Neighbourhood character
+        definition: Arguments that a project does or doesn't fit the existing character of an area, apart from formal heritage status.
+        includes: ["out of character", "doesn't fit the neighbourhood"]
+        excludes: [design of the building itself -> BF.ARCHITECTURE]
+        supply_direction: ""
+
+  - code: II
+    label: Infrastructure and impact
+    definition: Effects of development on services, streets and the local environment.
+    issues:
+      - {code: II.PARKING, label: Parking, definition: "Parking supply, minimums or maximums, and on-street parking pressure.", includes: [], excludes: [], supply_direction: fewer parking requirements}
+      - {code: II.TRAFFIC, label: Traffic, definition: "Traffic volumes, congestion, safety and access to the site.", includes: [], excludes: [], supply_direction: ""}
+      - {code: II.SERVICING, label: Water and sewer capacity, definition: "Water, sanitary and storm servicing capacity, basement flooding.", includes: [], excludes: [], supply_direction: ""}
+      - {code: II.SCHOOLS, label: Schools, definition: "School capacity and student accommodation.", includes: [], excludes: [], supply_direction: ""}
+      - {code: II.PARKS, label: Parks and parkland, definition: "Parkland dedication, new parks, and park access.", includes: [], excludes: [shadow on parks -> BF.SHADOW_WIND], supply_direction: ""}
+      - {code: II.TREES, label: Trees and canopy, definition: "Tree removal, tree protection and canopy.", includes: [], excludes: [], supply_direction: ""}
+      - {code: II.CONSTRUCTION, label: Construction disruption, definition: "Noise, dust, road closures and other construction-period impacts.", includes: [], excludes: [], supply_direction: ""}
+
+  - code: MP
+    label: Money and process
+    definition: Charges, approval process and how decisions are made or appealed.
+    issues:
+      - {code: MP.DEV_CHARGES, label: Development charges, definition: "Development charge rates, exemptions and deferrals.", includes: [], excludes: [], supply_direction: lower charges}
+      - {code: MP.COMMUNITY_BENEFITS, label: Community benefits charges and Section 37, definition: "Community benefits charges and benefits secured through Section 37 or 45.", includes: [], excludes: [affordable units secured -> AF.SECURED_UNITS], supply_direction: ""}
+      - {code: MP.FEES_TIMELINES, label: Fees and timelines, definition: "Application fees, review timelines, refunds and approval speed.", includes: [], excludes: [], supply_direction: faster approvals}
+      - {code: MP.DEFER_REFUSE, label: Deferrals and refusals, definition: "Motions or decisions to defer, refuse or send an application back.", includes: [], excludes: [], supply_direction: approve}
+      - {code: MP.APPEALS, label: TLAB and Ontario Land Tribunal appeals and settlements, definition: "Appeals, the City's position at TLAB or the OLT, settlements, and court challenges.", includes: [authority to settle, City Solicitor directions], excludes: [], supply_direction: settle}
+      - {code: MP.STRONG_MAYOR, label: Use of strong-mayor powers, definition: "Mayoral decisions and directives, and votes where strong-mayor powers were used or threatened.", includes: [], excludes: [], supply_direction: ""}
+
+  - code: US
+    label: Use
+    definition: What the building is used for.
+    issues:
+      - {code: US.RESIDENTIAL, label: Residential, definition: "Residential use as such (permitting or removing residential use).", includes: [], excludes: [], supply_direction: permit}
+      - {code: US.MIXED_USE, label: Mixed-use, definition: "Combined residential and non-residential use.", includes: [], excludes: [], supply_direction: permit}
+      - {code: US.RETAIL_GRADE, label: Retail at grade, definition: "Ground-floor retail requirements and main-street retail.", includes: [], excludes: [], supply_direction: ""}
+      - {code: US.OFFICE, label: Office, definition: "Office space, including office replacement policies.", includes: [], excludes: [], supply_direction: ""}
+      - {code: US.INSTITUTIONAL, label: Institutional, definition: "Hospitals, schools, places of worship, community facilities.", includes: [], excludes: [], supply_direction: ""}
+      - {code: US.SHORT_TERM_RENTAL, label: Short-term rentals, definition: "Short-term rental rules and their effect on long-term housing.", includes: [], excludes: [], supply_direction: ""}
+
+# Attributes recorded with every tag
+stance:
+  - {code: supports, definition: "Argues or votes for the proposal or the issue position."}
+  - {code: opposes, definition: "Argues or votes against."}
+  - {code: conditional, definition: "Supports only with changes or conditions (e.g. 'support if reduced to 8 storeys')."}
+  - {code: neutral, definition: "Raises the issue without taking a side (e.g. a staff summary)."}
+  - {code: procedural, definition: "Deals with process only (deferral to get more information, referral)."}
+
+actor_class:
+  - {code: councillor}
+  - {code: mayor}
+  - {code: city_staff}
+  - {code: applicant}
+  - {code: residents_association}
+  - {code: individual_resident, note: "Counted in aggregate only; never named in reports."}
+  - {code: advocacy_group}
+  - {code: province}
+
+strength:   # strongest first
+  - {code: recorded_vote, rank: 1}
+  - {code: motion, rank: 2, note: "Moving or seconding a motion."}
+  - {code: public_statement, rank: 3, note: "Statement in debate, a letter or a deputation."}
+  - {code: mention, rank: 4}
+
+open_questions_for_owner:
+  - Does "supply_direction" capture what users mean by "pro-housing"? Several issues (heritage, shadow, affordability) have no single pro-housing side.
+  - Should affordability positions count toward a support rate at all, or be shown separately?
+  - Are Committee of Adjustment matters (mostly MASSING and DENSITY variances on single lots) weighted the same as rezonings?

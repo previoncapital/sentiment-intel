@@ -11,3 +11,4 @@ technical choices). Schema, taxonomy and source decisions all go here.
 | 2026-11-14 | [Seed data: ward map and every mayor and councillor since Dec 2018](2026-11-14-council-and-ward-seed-data.md) | Claude Code (routine); for owner review |
 | 2026-11-15 | Keep a data issues log (`docs/data-issues/`) for every discrepancy, with status and who can resolve it | Owner request |
 | 2026-11-15 | Use Ward 12 (Toronto-St. Paul's) for the first owner check of linked records | Owner |
+| 2026-11-15 | [Issue taxonomy v0 and Ward 12 check pack (preview)](2026-11-15-taxonomy-v0-and-ward-12-preview.md) | Claude Code (routine); for owner review |

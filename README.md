@@ -11,7 +11,8 @@ intelligence.
 - Source registry: [`docs/source-registry.md`](docs/source-registry.md)
 - Decisions log: [`docs/decisions/`](docs/decisions/)
 - Setup for the owner: [`docs/setup/`](docs/setup/)
-- Review pages for the owner: [`docs/seed-review/`](docs/seed-review/)
+- Review pages for the owner: [`docs/seed-review/`](docs/seed-review/), [`docs/ward-review/`](docs/ward-review/), [`docs/taxonomy/`](docs/taxonomy/)
+- Data issues log: [`docs/data-issues/`](docs/data-issues/)
 
 ## Rebuilding the seed data
 
@@ -25,4 +26,8 @@ uv run python db/seed/build/render_review.py
 
 ```bash
 uv run --group dev pytest
+```
+
+```bash
+uv run python pipelines/ward_pack/build_ward_pack.py --ward 12
 ```
