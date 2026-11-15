@@ -9,7 +9,8 @@
 #   statutory           - set by law (Municipal Elections Act)
 #   official            - stated in a City record (news release, Clerk's report,
 #                         by-law) or in the resignation notice it reports
-#   by_election_day     - polling day; the official swearing-in date wasn't found
+#   first_council_meeting - first Council meeting attended; used for by-election
+#                         winners, who take the oath at the next meeting
 #   reported            - from news coverage only; not yet confirmed in a City record
 # and `confidence`: high / medium / low.
 #
@@ -22,9 +23,10 @@ terms:
     start_basis: statutory
     start_confidence: medium
     start_note: >-
-      Municipal Elections Act as it applied to the 2018 election (terms began
-      December 1 until the 2022 term). Consistent with the first Council
-      meeting on 2018-12-04. Not yet confirmed in a City record.
+      Legal start of the term under the Municipal Elections Act as it applied to
+      the 2018 election (terms began December 1; from 2022, November 15). The
+      inaugural meeting, where members made their declarations of office, was
+      2018-12-04. Not yet confirmed in a City record.
     end: 2022-11-14
     end_basis: statutory
     end_confidence: high
@@ -56,22 +58,68 @@ terms:
 # kind: left (resigned / died / removed) or joined (appointed / by-election).
 changes:
   # ---------------- 2018-2022 term ----------------
+  # Jim Karygiannis was removed and reinstated twice over his 2018 campaign
+  # expenses before the removal became final. Council attendance matches this:
+  # he attended every meeting through 2020-05-28 (no meeting fell between Nov 6
+  # and Nov 25, 2019) and none from 2020-06-29 on (no meeting fell in the
+  # Aug 5 - Sept 24, 2020 stay period).
   - person: Jim Karygiannis
     office: councillor
     ward: 22
     kind: left
     reason: removed_from_office
-    date: 2020-05-28
-    basis: last_council_meeting_attended
-    confidence: low
-    note: >-
-      Removed over 2018 campaign-expense filings. First removed November 2019,
-      reinstated by the Superior Court, then removed after an appeal-court
-      ruling in June 2020 (later appeals ended September 2020). Exact date the
-      seat became vacant still to confirm; until then the date used is his
-      last Council meeting in the attendance data.
+    date: 2019-11-06
+    basis: reported
+    confidence: high
+    note: Removed by the City Clerk after review of 2018 campaign expenses.
     sources:
-      - https://www.cp24.com/news/jim-karygiannis-removed-from-council-seat-after-campaign-expense-review-1.4673209
+      - https://globalnews.ca/news/6216018/jim-karygiannis-ontario-superior-court-decision
+  - person: Jim Karygiannis
+    office: councillor
+    ward: 22
+    kind: joined
+    reason: reinstated_by_court
+    date: 2019-11-25
+    basis: reported
+    confidence: high
+    note: Reinstated by Ontario Superior Court (Justice Chalmers).
+    sources:
+      - https://www.cp24.com/news/judge-returns-jim-karygiannis-to-city-council-seat-1.4701857
+  - person: Jim Karygiannis
+    office: councillor
+    ward: 22
+    kind: left
+    reason: removed_from_office
+    date: 2020-06-24
+    basis: reported
+    confidence: high
+    note: Court of Appeal ruled the Superior Court lacked jurisdiction; seat forfeited.
+    sources:
+      - https://www.cbc.ca/news/canada/toronto/karygiannis-court-of-appeal-ruling-1.5625157
+  - person: Jim Karygiannis
+    office: councillor
+    ward: 22
+    kind: joined
+    reason: reinstated_by_court
+    date: 2020-08-05
+    basis: reported
+    confidence: medium
+    note: >-
+      Court of Appeal stayed its ruling pending his Supreme Court leave
+      application. Date is the first news report; the order may be a day earlier.
+    sources:
+      - https://globalnews.ca/news/7252918/jim-karygiannis-ontario-court-of-appeal-stay
+  - person: Jim Karygiannis
+    office: councillor
+    ward: 22
+    kind: left
+    reason: removed_from_office
+    date: 2020-09-24
+    basis: reported
+    confidence: high
+    note: Supreme Court of Canada refused leave to appeal; seat vacant from this date.
+    sources:
+      - https://www.yorku.ca/osgoode/thecourt/2020/10/14/james-karygiannis-v-city-of-toronto-a-denial-at-the-scc-ends-a-two-year-saga/
   - person: Nick Mantas
     office: councillor
     ward: 22
@@ -80,7 +128,7 @@ changes:
     date: 2021-01-18
     basis: reported
     confidence: medium
-    note: By-election 2021-01-15; reported sworn in 2021-01-18.
+    note: By-election 2021-01-15; sworn in (declaration of office) 2021-01-18.
     sources:
       - https://globalnews.ca/news/7579916/nick-mantas-ward-22-scarborough-agincourt-byelection
   - person: Joe Cressy
@@ -200,11 +248,11 @@ changes:
     kind: joined
     reason: by_election
     date: 2023-07-12
-    basis: reported
+    basis: official
     confidence: high
-    note: By-election 2023-06-26; took office 2023-07-12.
+    note: By-election 2023-06-26; Declaration of Office made 2023-07-12.
     sources:
-      - https://www.toronto.ca/legdocs/mayoraldecisions/mayor0002.pdf
+      - https://www.toronto.ca/news/mayor-olivia-chow-takes-office-as-mayor-of-toronto/
   - person: Gary Crawford
     office: councillor
     ward: 20
@@ -221,10 +269,13 @@ changes:
     ward: 20
     kind: joined
     reason: by_election
-    date: 2023-11-30
-    basis: by_election_day
+    date: 2023-12-13
+    basis: first_council_meeting
     confidence: medium
-    note: First Council meeting attended 2023-12-13.
+    note: >-
+      By-election 2023-11-30; Clerk certified results Monday 2023-12-04. By-election
+      winners take the oath at the next Council meeting; 2023-12-13 is the first
+      meeting he attended. Exact oath date not yet confirmed.
     sources:
       - https://toronto.ctvnews.ca/former-tdsb-trustee-parthi-kandavel-wins-scarborough-southwest-byelection-unofficial-results-1.6667056
   - person: Jaye Robinson
@@ -242,11 +293,15 @@ changes:
     ward: 15
     kind: joined
     reason: by_election
-    date: 2024-11-04
-    basis: by_election_day
+    date: 2024-11-13
+    basis: first_council_meeting
     confidence: medium
-    note: First Council meeting attended 2024-11-13.
+    note: >-
+      By-election 2024-11-04; Clerk certified 2024-11-06 and said she would be
+      sworn in at the next Council meeting (2024-11-13, her first in the
+      attendance data).
     sources:
+      - https://www.toronto.ca/news/toronto-city-clerk-certifies-ward-15-don-valley-west-by-election-results/
       - https://toronto.ctvnews.ca/former-tdsb-trustee-chernos-lin-wins-byelection-in-toronto-s-ward-15-1.7097791
   - person: Jennifer McKelvie
     office: councillor
@@ -264,11 +319,14 @@ changes:
     ward: 25
     kind: joined
     reason: by_election
-    date: 2025-09-29
-    basis: by_election_day
+    date: 2025-10-08
+    basis: first_council_meeting
     confidence: medium
-    note: First Council meeting attended 2025-10-08.
+    note: >-
+      By-election 2025-09-29; Clerk certified 2025-09-30; 2025-10-08 is the first
+      Council meeting he attended. Exact oath date not yet confirmed.
     sources:
+      - https://www.toronto.ca/news/toronto-city-clerk-certifies-ward-25-scarborough-rouge-park-by-election-results/
       - https://www.toronto.ca/news/toronto-city-council-opts-for-by-election-for-ward-25-scarborough-rouge-park/
 
 # Names whose first/last split can't be inferred from the results files, which

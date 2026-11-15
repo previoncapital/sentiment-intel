@@ -41,6 +41,24 @@
   December 2022 votes carry `2023.` codes. Link by meeting date.
 - One name in the 2018–22 voting data is garbled (`BailÃ£o`); the build
   repairs this kind of encoding error.
-- **Still to confirm:** Jim Karygiannis's exact removal date (2020); the
-  2018–22 term start date in a City record; swearing-in dates for the 2023–25
-  by-election winners (by-election day used for now).
+- **Follow-up investigation (2026-11-15):**
+  - The attendance gap is in all four published versions of the file (CSV,
+    JSON, XML, refreshed Feb 2026): members listed per Council session drop
+    from 26 to 24 in May 2022 and stay there; Mihevc was added, Buxton Potts
+    and Milczyn never were. Cause unknown; question for the open data team.
+  - Ward 22: Karygiannis was removed 2019-11-06, reinstated 2019-11-25,
+    removed 2020-06-24, reinstated by stay about 2020-08-05, removed for good
+    2020-09-24. Attendance is consistent (no meeting fell inside either period
+    in which he was back in office). Now modelled as three terms and three
+    vacancies.
+  - 2018–22 votes: all committee votes are dated; full Council votes are
+    dated only for April–November 2020 (first virtual meetings). Dates can be
+    restored from the meeting schedule. 2022–26 Council votes carry the
+    minute of the vote, written as 24-hour time with an AM/PM label.
+  - By-election starts now use the oath date (Chow, official) or, where no
+    exact date was published, the first Council meeting attended, since
+    winners take the oath at the next meeting (Clerk's statement for
+    Chernos Lin).
+- **Still to confirm:** oath dates for Kandavel (2023) and Shan (2025); the
+  exact date of the August 2020 stay; the 2018–22 term start in a City
+  record (legal start Dec 1; oath at the Dec 4 inaugural meeting).
